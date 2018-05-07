@@ -1,0 +1,38 @@
+
+#company{
+  margin-bottom: 15px;
+  background: white;
+  .company{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-around;
+
+    div{
+      border: 1px solid black;
+      width: calc(100% / 4);
+      padding: 5px 0;
+    }
+  }
+}
+
+
+
+#history{
+  margin-bottom: 15px;
+  background: white;
+  border-radius: 5px;
+  .company{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-around;
+
+    div{
+
+      border: 1px solid black;
+      width: calc(100% / 4);
+      padding: 5px 0;
+    }
+  }
+}

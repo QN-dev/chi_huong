@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/insert.css') }}">
+{% endblock %}
+{%  block content %}
+<form action="/insert" method='post'>
+  <input type="text" placeholder="Tên công ty" name='business_name'required>
+  <input type="text" placeholder="Người đại diện" name='agent'>
+  <input type="text" placeholder="Chức vụ" name='possition'>
+  <input type="text" placeholder="Địa chỉ" name='address'>
+  <input type="tel" placeholder="Số điện thoại" name='phone'>
+  <input type="tel" placeholder="Số fax" name='fax'>
+  <input type="number" placeholder="Mã số thuế" name='tax_number'>
+  <input type="number" placeholder="Số khoản ngân hàng" name='bank_account'>
+  <input type="text" placeholder="Tên Ngân hàng" name='bank_name'>
+  <input type="number" placeholder="Giá trị hợp đồng" name='contact_value'>
+  <input id='datetimepicker' type="datetime" placeholder="Ngày cần gọi" name='date_to_call' required>
+  <!-- <input type="text" placeholder="Giá trị hợp đồng bằng chữ" name='contact_value_letter'> -->
+
+  <select name="status">
+    <option value="to_call">Cần gọi</option>
+    <option value="calling">Đang gọi</option>
+    <option value="waiting">Đã gọi</option>
+  </select>
+  <input type="submit" value="Lưu">
+</form>
+
+
+
+
+{% endblock %}

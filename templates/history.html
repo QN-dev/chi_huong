@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/company_list.css') }}">
+{% endblock %}
+
+
+
+{% block content %}
+<h3 class="text-cent">Lịch sử thay đổi</h3>
+<div id="history">
+    <div class="company">
+      <div class="time">Thời gian</div>
+      <div class="business_name">Tên công ty</div>
+      <div class="note">Ghi nhớ</div>
+      <div class="status">Trạng thái</div>
+    </div>
+    {% for note in data|reverse %}
+    <div class="company">
+      <div class="time">{{ note['time'] }}</div>
+      <div class="business_name"><a href="company/{{note['id']}}">{{ note['business_name'] }}</a></div>
+      <div class="note">{{ note['note'] }}</div>
+      <div class="status">{{ note['status'] }}</div>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+{% endblock %}

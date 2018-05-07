@@ -1,0 +1,54 @@
+#container {
+  height: auto;
+}
+.ul_wrap{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  border: 1px solid black;
+  ul{
+    width: 30%;
+    text-align: left;
+    margin: 0;
+    li{
+      list-style: none;
+      span{
+        width: 140px;
+        display: inline-block;
+      }
+    }
+  }
+}
+input{
+  margin: 0 auto;
+}
+.red{
+  color: #e74c3c;
+  span{
+    color: black;
+  }
+}
+.green{
+  color: #27ae60;
+  span{
+    color: black;
+  }
+}
+.yellow{
+  color: #f1c40f;
+  span{
+    color: black;
+  }
+}
+textarea{
+  display: block;
+  margin: 10px auto;
+}
+
+#history{
+  .company{
+    div{
+      width: calc(100% / 3);
+    }
+  }
+}

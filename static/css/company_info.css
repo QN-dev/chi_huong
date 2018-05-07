@@ -1,0 +1,46 @@
+#container {
+  height: auto; }
+
+.ul_wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  border: 1px solid black; }
+  .ul_wrap ul {
+    width: 30%;
+    text-align: left;
+    margin: 0; }
+    .ul_wrap ul li {
+      list-style: none; }
+      .ul_wrap ul li span {
+        width: 140px;
+        display: inline-block; }
+
+input {
+  margin: 0 auto; }
+
+.red {
+  color: #e74c3c; }
+  .red span {
+    color: black; }
+
+.green {
+  color: #27ae60; }
+  .green span {
+    color: black; }
+
+.yellow {
+  color: #f1c40f; }
+  .yellow span {
+    color: black; }
+
+textarea {
+  display: block;
+  margin: 10px auto; }
+
+#history .company div {
+  width: calc(100% / 3); }

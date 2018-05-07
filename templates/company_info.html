@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/company_list.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/company_info.css') }}">
+
+{% endblock %}
+
+{% block content %}
+    <h3 class='text-center'>Công ty: {{ data['business_name'] }}</h3>
+    <div class="ul_wrap">
+        <ul>
+            <li class="agent"><span>Người địa diện: </span>{{ data['agent'] }}</li>
+            <li class="possition"><span>Chức vụ: </span>{{ data['possition'] }}</li>
+            <li class="phone"><span>Số điện thoại: </span>{{ data['phone'] }}</li>
+            <li class="address"><span>Địa chỉ: </span>{{ data['address'] }}</li>
+        </ul>
+        <ul>
+            <li class="fax"><span>Số Fax: </span>{{ data['fax'] }}</li>
+            <li class="tax_number"><span>Mã số thuế: </span>{{ data['tax_number'] }}</li>
+            <li class="bank_account"><span>Tài khoản ngân hàng: </span>{{ data['bank_account'] }}</li>
+            <li class="bank_name"><span>Tên ngân hàng: </span>{{ data['bank_name'] }}</li>
+        </ul>
+    </div>
+    <h4 class="date_to_call"><span>Ngày cần gọi: </span>{{ data['date_to_call'] }}</h4>
+    <h4 class="contact_value"><span>Giá trị hợp đồng: </span>{{ data['contact_value'] }}</h4>
+    <form action="/company/{{company_id}}" method='post'>
+        <h4>Trạng thái</h4>
+        {% if data['status']=='to_call' %}
+            <input type="radio" onclick='text_area_check($(this))' name='status' value='to_call' checked> Cần gọi<br>
+            <input type="radio" onclick='text_area_check($(this))'  name='status' value='calling'> Đang gọi<br>
+            <input type="radio" onclick='text_area_check($(this))'  name='status' value='done'> Đã gọi<br>
+        {% elif data['status']=='calling' %}
+            <input type="radio" onclick='text_area_check($(this))'  name='status' value='to_call'> Cần gọi<br>
+            <input type="radio" onclick='text_area_check($(this))'  name='status' value='calling' checked> Đang gọi<br>
+            <input type="radio" onclick='text_area_check($(this))'  name='status' value='done'> Đã gọi<br>
+
+        {% else %}
+            <input type="radio" onclick='text_area_check($(this))'  name='status' value='to_call'> Cần gọi<br>
+            <input type="radio" onclick='text_area_check($(this))'  name='status' value='calling'> Đang gọi<br>
+            <input type="radio" onclick='text_area_check($(this))'  name='status' value='done' checked> Đã gọi<br>
+        {% endif %}
+        <textarea name="note" rows="8" cols="80"></textarea>
+        <input id='datetimepicker' class='date' type="datetime" placeholder="Ngày gọi tiếp theo" name='date_to_call'>
+        <input type="submit" class='btn btn-info' value="Lưu">
+
+    </form>
+
+
+    <h3>Lịch sử thay đổi</h3>
+    <div id="history">
+        <div class="company">
+          <div class="time">Thời gian</div>
+          <div class="note">Ghi nhớ</div>
+          <div class="status">Trạng thái</div>
+        </div>
+        {% for note in notes|reverse %}
+        <div class="company">
+          <div class="time">{{ note['time'] }}</div>
+          <div class="note">{{ note['note'] }}</div>
+          <div class="status">{{ note['status'] }}</div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src='{{ url_for("static",filename="js/company_info.js")}}'>
+
+</script>
+{% endblock %}

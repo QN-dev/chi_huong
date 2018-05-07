@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/company_list.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+
+
+{% block content %}
+<div id="noti">
+  <h3>Công ty An Bình</h3>
+  <h4>Các công ty cần gọi</h4>
+  <div id="company">
+      <div class="company">
+        <div class="business_name">Tên Doanh Nghiệp</div>
+        <div class="business_name">Giá trị hợp đồng</div>
+        <div class="contact_value">Người đại diện</div>
+        <div class="status">Số điện thoại</div>
+        <div class="date_to_call">Ngày cần gọi</div>
+      </div>
+      {% for company in data %}
+      <div class="company">
+        <div class="business_name"><a href="company/{{company['id']}}">{{ company['business_name'] }}</a></div>
+        <div class="contact_value">{{ company['contact_value'] }}</div>
+        <div class="contact_value">{{ company['agent'] }}</div>
+        <div class="status">{{ company['phone'] }}</div>
+        <div class="date_to_call">{{ company['date_to_call'] }}</div>
+      </div>
+      {% endfor %}
+  </div>
+</div>
+
+{%  endblock %}

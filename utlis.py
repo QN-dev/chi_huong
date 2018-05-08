@@ -1,5 +1,9 @@
 import openpyxl as xl
-from datetime import datetime
+from datetime import datetime,timedelta
+
+
+
+
 
 def open_file(file_path,active=False):# XXX: create a saving file
     try:
@@ -23,11 +27,22 @@ def get_column_index(sheet,entry):
     return 100
 
 
-def validate_date_to_call():
-    current = datetime.now().strptime('')
+def auto_check(number_of_day_to_announce):
+    print('hey')
+    now=datetime.now()
     wb,sheet,max_row,max_col=open_file('data/company_info.xlsx',active=True)
-    for i in range(1,max_row+1):
-        time=3
+    for i in range(2,max_row+1):
+        status = sheet.cell(row=i,column=get_column_index(sheet,'status')).value
+        print(status)
+        if status != 'to_call' :#just check the status is not tocall
+            date = sheet.cell(row=i,column=get_column_index(sheet,'date_to_call')).value
+            if  now + timedelta(days=number_of_day_to_announce) > datetime.strptime(date,'%d-%m-%Y'):
+                sheet.cell(row=i,column=get_column_index(sheet,'status')).value='to_call'
+                print('changed')
+            else:
+                print('not')
+    wb.save('data/company_info.xlsx')
+
 
 
 def insert_company_info(save_path,data):
@@ -47,7 +62,6 @@ def insert_company_info(save_path,data):
     'date_to_call'
     '''
     wb,sheet,max_row,max_col=open_file(save_path,active=True)
-
     id = sheet.cell(row=max_row,column=1).value+1 if str(sheet.cell(row=max_row,column=1).value).isdigit() else 0
     row_to_write=max_row+1
     sheet.cell(row=row_to_write,column=get_column_index(sheet,'id')).value=id
@@ -64,7 +78,6 @@ def insert_company_info(save_path,data):
     sheet.cell(row=row_to_write,column=get_column_index(sheet,'status')).value=data['status']
     sheet.cell(row=row_to_write,column=get_column_index(sheet,'date_to_call')).value=data['date_to_call']
     print('Writing new data')
-
     wb.save(save_path)
 
 
@@ -74,9 +87,6 @@ def write_change_status(data_path,id,status):
         if sheet.cell(row=i,column=get_column_index(sheet,'id')).value==id:
             sheet.cell(row=i,column=get_column_index(sheet,'status')).value=status
     wb.save(data_path)
-
-
-
 
 
 def get_data_from_sheet(sheet,row):
@@ -117,6 +127,8 @@ def get_data_from_sheet(sheet,row):
     else:
         data['status_write']='Đã gọi'
     return data
+
+
 def get_note_from_sheet(sheet,row):
     '''
     'business_name'

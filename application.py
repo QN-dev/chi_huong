@@ -9,8 +9,10 @@ app = Flask(__name__)
 app.debug = True
 
 
+
 @app.route('/')
 def index():
+    auto_check(90)
     wb,sheet,max_row,max_col=open_file('data/company_info.xlsx',active=True)
     data=[]
     for i in range(2,max_row+1):

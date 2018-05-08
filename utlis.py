@@ -28,7 +28,6 @@ def get_column_index(sheet,entry):
 
 
 def auto_check(number_of_day_to_announce):
-    print('hey')
     now=datetime.now()
     wb,sheet,max_row,max_col=open_file('data/company_info.xlsx',active=True)
     for i in range(2,max_row+1):
@@ -38,9 +37,6 @@ def auto_check(number_of_day_to_announce):
             date = sheet.cell(row=i,column=get_column_index(sheet,'date_to_call')).value
             if  now + timedelta(days=number_of_day_to_announce) > datetime.strptime(date,'%d-%m-%Y'):
                 sheet.cell(row=i,column=get_column_index(sheet,'status')).value='to_call'
-                print('changed')
-            else:
-                print('not')
     wb.save('data/company_info.xlsx')
 
 

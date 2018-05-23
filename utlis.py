@@ -24,7 +24,7 @@ def get_column_index(sheet,entry):
     for i in range(1,sheet.max_column+1):
         if sheet.cell(row=1,column=i).value == entry:
             return i
-    return 100
+    return None
 
 
 def auto_check(number_of_day_to_announce):
@@ -32,7 +32,6 @@ def auto_check(number_of_day_to_announce):
     wb,sheet,max_row,max_col=open_file('data/company_info.xlsx',active=True)
     for i in range(2,max_row+1):
         status = sheet.cell(row=i,column=get_column_index(sheet,'status')).value
-        print(status)
         if status != 'to_call' :#just check the status is not tocall
             date = sheet.cell(row=i,column=get_column_index(sheet,'date_to_call')).value
             if  now + timedelta(days=number_of_day_to_announce) > datetime.strptime(date,'%d-%m-%Y'):
@@ -50,6 +49,8 @@ def insert_company_info(save_path,data):
     'address'
     'phone'
     'fax'
+    'contact_person'
+    'contact_phone'
     'tax_number'
     'bank_account'
     'bank_name'
@@ -68,20 +69,62 @@ def insert_company_info(save_path,data):
     sheet.cell(row=row_to_write,column=get_column_index(sheet,'phone')).value=data['phone']
     sheet.cell(row=row_to_write,column=get_column_index(sheet,'fax')).value=data['fax']
     sheet.cell(row=row_to_write,column=get_column_index(sheet,'tax_number')).value=data['tax_number']
+    sheet.cell(row=row_to_write,column=get_column_index(sheet,'contact_person')).value=data['contact_person']
+    sheet.cell(row=row_to_write,column=get_column_index(sheet,'contact_phone')).value=data['contact_phone']
     sheet.cell(row=row_to_write,column=get_column_index(sheet,'bank_account')).value=data['bank_account']
     sheet.cell(row=row_to_write,column=get_column_index(sheet,'bank_name')).value=data['bank_name']
     sheet.cell(row=row_to_write,column=get_column_index(sheet,'contact_value')).value=data['contact_value']
     sheet.cell(row=row_to_write,column=get_column_index(sheet,'status')).value=data['status']
     sheet.cell(row=row_to_write,column=get_column_index(sheet,'date_to_call')).value=data['date_to_call']
-    print('Writing new data')
+    print('Wrote new data')
+    wb.save(save_path)
+
+def edit_company_info(save_path,data):
+    '''
+    data's order:
+    'business_name'
+    'agent'
+    'possition'
+    'address'
+    'phone'
+    'fax'
+    'contact_person'
+    'contact_phone'
+    'tax_number'
+    'bank_account'
+    'bank_name'
+    'contact_value'
+    'status'
+    'date_to_call'
+    '''
+    wb,sheet,max_row,max_col=open_file(save_path,active=True)
+    for i in range(2,max_row+1):
+        if sheet.cell(row=i,column=get_column_index(sheet,'id')).value == data['id']:
+            row_to_write = i
+            sheet.cell(row=row_to_write,column=get_column_index(sheet,'id')).value=data['id']
+            sheet.cell(row=row_to_write,column=get_column_index(sheet,'business_name')).value=data['business_name']
+            sheet.cell(row=row_to_write,column=get_column_index(sheet,'agent')).value=data['agent']
+            sheet.cell(row=row_to_write,column=get_column_index(sheet,'possition')).value=data['possition']
+            sheet.cell(row=row_to_write,column=get_column_index(sheet,'address')).value=data['address']
+            sheet.cell(row=row_to_write,column=get_column_index(sheet,'phone')).value=data['phone']
+            sheet.cell(row=row_to_write,column=get_column_index(sheet,'fax')).value=data['fax']
+            sheet.cell(row=row_to_write,column=get_column_index(sheet,'tax_number')).value=data['tax_number']
+            sheet.cell(row=row_to_write,column=get_column_index(sheet,'contact_person')).value=data['contact_person']
+            sheet.cell(row=row_to_write,column=get_column_index(sheet,'contact_phone')).value=data['contact_phone']
+            sheet.cell(row=row_to_write,column=get_column_index(sheet,'bank_account')).value=data['bank_account']
+            sheet.cell(row=row_to_write,column=get_column_index(sheet,'bank_name')).value=data['bank_name']
+            sheet.cell(row=row_to_write,column=get_column_index(sheet,'contact_value')).value=data['contact_value']
+            sheet.cell(row=row_to_write,column=get_column_index(sheet,'status')).value=data['status']
+            sheet.cell(row=row_to_write,column=get_column_index(sheet,'date_to_call')).value=data['date_to_call']
+    print('Edited data')
     wb.save(save_path)
 
 
-def write_change_status(data_path,id,status):
+def write_change(data_path,id,column,value):
     wb,sheet,max_row,max_col=open_file(data_path,active=True)
     for i in range(2,max_row+1):
         if sheet.cell(row=i,column=get_column_index(sheet,'id')).value==id:
-            sheet.cell(row=i,column=get_column_index(sheet,'status')).value=status
+            sheet.cell(row=i,column=get_column_index(sheet,column)).value=value
     wb.save(data_path)
 
 
@@ -94,6 +137,8 @@ def get_data_from_sheet(sheet,row):
     'phone'
     'fax'
     'tax_number'
+    'contact_person'
+    'contact_phone'
     'bank_account'
     'bank_name'
     'contact_value'
@@ -108,6 +153,8 @@ def get_data_from_sheet(sheet,row):
     data['possition']=sheet.cell(row=row,column=get_column_index(sheet,'possition')).value
     data['address']=sheet.cell(row=row,column=get_column_index(sheet,'address')).value
     data['phone']=sheet.cell(row=row,column=get_column_index(sheet,'phone')).value
+    data['contact_person']=sheet.cell(row=row,column=get_column_index(sheet,'contact_person')).value
+    data['contact_phone']=sheet.cell(row=row,column=get_column_index(sheet,'contact_phone')).value
     data['fax']=sheet.cell(row=row,column=get_column_index(sheet,'fax')).value
     data['tax_number']=sheet.cell(row=row,column=get_column_index(sheet,'tax_number')).value
     data['bank_account']=sheet.cell(row=row,column=get_column_index(sheet,'bank_account')).value
@@ -132,6 +179,8 @@ def get_note_from_sheet(sheet,row):
     'possition'
     'address'
     'phone'
+    'contact_person'
+    'contact_phone'
     'fax'
     'tax_number'
     'bank_account'

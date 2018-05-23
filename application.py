@@ -1,6 +1,6 @@
 from flask import Flask,render_template,request,redirect,url_for
 import openpyxl as xl
-from datetime import datetime
+from datetime import datetime,timedelta
 from collections import OrderedDict
 import os
 from utlis import *
@@ -34,6 +34,8 @@ def insert():
         data['possition']=request.form.get('possition')
         data['address']=request.form.get('address')
         data['phone']=request.form.get('phone')
+        data['contact_person']=request.form.get('contact_person')
+        data['contact_phone']=request.form.get('contact_phone')
         data['fax']=request.form.get('fax')
         data['tax_number']=request.form.get('tax_number')
         data['bank_account']=request.form.get('bank_account')
@@ -47,6 +49,37 @@ def insert():
         else:
             return render_template('messange.html',message='Vui lòng điền thông tin')
 
+@app.route('/edit/<int:company_id>', methods=['GET', 'POST'])
+def edit(company_id):
+    if request.method=='GET':
+        wb,sheet,max_row,max_col=open_file('data/company_info.xlsx',active=True)
+        for i in range(2,max_row+1):
+            if sheet.cell(row=i,column=get_column_index(sheet,'id')).value == company_id:
+                data = get_data_from_sheet(sheet,i)
+        return render_template('edit.html',data=data)
+    elif request.method == 'POST':
+        data={}
+        data['id']=company_id
+        data['business_name']=request.form.get('business_name')
+        data['agent']=request.form.get('agent')
+        data['possition']=request.form.get('possition')
+        data['address']=request.form.get('address')
+        data['phone']=request.form.get('phone')
+        data['contact_person']=request.form.get('contact_person')
+        data['contact_phone']=request.form.get('contact_phone')
+        data['fax']=request.form.get('fax')
+        data['tax_number']=request.form.get('tax_number')
+        data['bank_account']=request.form.get('bank_account')
+        data['bank_name']=request.form.get('bank_name')
+        data['contact_value']=request.form.get('contact_value')
+        data['status']=request.form.get('status')
+        data['date_to_call']=request.form.get('date_to_call')
+        print('postted new data')
+        if len(data)>0:
+            edit_company_info('data/company_info.xlsx',data)
+            return redirect(url_for('company_info',company_id=company_id))
+        else:
+            return render_template('messange.html',message='Vui lòng điền thông tin')
 
 @app.route('/listing')
 def listing():
@@ -100,7 +133,6 @@ def company_info(company_id):
             data = get_data_from_sheet(sheet,i)
 
 
-
     if request.method=='GET':
         return render_template('company_info.html',data=data,notes=note,company_id=company_id)
     elif request.method=='POST':
@@ -116,11 +148,16 @@ def company_info(company_id):
         history['change_status']=is_change
         history['status']= request.form.get('status')
         write_history('data/history.xlsx',history)
-
-
         #write company status if has change in status
         if is_change:
-            write_change_status('data/company_info.xlsx',data['id'],request.form.get('status'))
+            write_change('data/company_info.xlsx',data['id'],'status',request.form.get('status'))
+            print(data['status'],'and ',request.form.get('status'))
+
+            #auto update when done calling
+            if request.form.get('status') =='done' :
+                time_to_call= datetime.strptime(data['date_to_call'],'%d-%m-%Y') + timedelta(days=365*2)
+                data['date_to_call'] =  datetime.strftime(time_to_call,'%d-%m-%Y')
+                write_change('data/company_info.xlsx',data['id'],'date_to_call',data['date_to_call'])
         else:
             pass
         return redirect('/company/'+str(company_id))

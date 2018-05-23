@@ -6,12 +6,12 @@ jQuery(document).ready(function() {
     $('textarea').css('display', 'none');
   }
 
-  // valid condition for show datetime input
-  if($('form input[value="done"]').is(':checked')) {
-    $('.date').css('display', 'block');
-  }else{
-    $('.date').css('display', 'none');
-  }
+  // // valid condition for show datetime input
+  // if($('form input[value="done"]').is(':checked')) {
+  //   $('.date').css('display', 'none');
+  // }else{
+  //   $('.date').css('display', 'none');
+  // }
 });
 
 
@@ -21,11 +21,5 @@ function text_area_check(input){
     $('textarea').css('display', 'block');
   }else{
     $('textarea').css('display', 'none');
-  }
-  // valid condition for show datetime input
-  if (input.attr('value')=='done' ){
-    $('.date').css('display', 'block');
-  }else{
-    $('.date').css('display', 'none');
   }
 }

@@ -6,18 +6,33 @@
 {% endblock %}
 {%  block content %}
 <form action="/insert" method='post'>
-  <input type="text" placeholder="Tên công ty" name='business_name'required>
-  <input type="text" placeholder="Người đại diện" name='agent'>
-  <input type="text" placeholder="Chức vụ" name='possition'>
-  <input type="text" placeholder="Địa chỉ" name='address'>
-  <input type="tel" placeholder="Số điện thoại" name='phone'>
-  <input type="tel" placeholder="Số fax" name='fax'>
-  <input type="number" placeholder="Mã số thuế" name='tax_number'>
-  <input type="number" placeholder="Số khoản ngân hàng" name='bank_account'>
-  <input type="text" placeholder="Tên Ngân hàng" name='bank_name'>
-  <input type="number" placeholder="Giá trị hợp đồng" name='contact_value'>
-  <input id='datetimepicker' type="datetime" placeholder="Ngày cần gọi" name='date_to_call' required>
-  <!-- <input type="text" placeholder="Giá trị hợp đồng bằng chữ" name='contact_value_letter'> -->
+  <p>Tên công ty</p>
+  <input type="text"  name='business_name'required>
+  <p>Người đại diện</p>
+  <input type="text"  name='agent'>
+  <p>Chức vụ</p>
+  <input type="text"  name='possition'>
+  <p>Số điện thoại</p>
+  <input type="tel"  name='phone'>
+  <p>Địa chỉ</p>
+  <input type="text"  name='address'>
+  <p>Người liên lạ</p>
+  <input type="text"  name='contact_person'>
+  <p>Số điện thoại người liên lạc</p>
+  <input type="tel"  name='contact_phone'>
+  <p>Số fax</p>
+  <input type="tel"  name='fax'>
+  <p>Mã số thuế</p>
+  <input type="number"  name='tax_number'>
+  <p>Số khoản ngân hàng</p>
+  <input type="number"  name='bank_account'>
+  <p>Tên Ngân hàng</p>
+  <input type="text"  name='bank_name'>
+  <p>Giá trị hợp đồng</p>
+  <input type="number"  name='contact_value'>
+  <p>Ngày cần gọi</p>
+  <input id='datetimepicker' type="datetime"  name='date_to_call' required>
+  <!-- <input type="text"  name='contact_value_letter'> -->
 
   <select name="status">
     <option value="to_call">Cần gọi</option>

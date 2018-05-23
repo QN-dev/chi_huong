@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/insert.css') }}">
+{% endblock %}
+{%  block content %}
+<form action="/edit/{{data['id']}}" method='post'>
+  <p>Tên công ty</p>
+  <input type="text"  name='business_name' value="{{ data['business_name'] }}"required>
+  <p>Người đại diện</p>
+  <input type="text"  name='agent' value="{{ data['agent'] }}">
+  <p>Chức vụ</p>
+  <input type="text"  name='possition' value="{{ data['possition'] }}">
+  <p>Số điện thoại</p>
+  <input type="tel"  name='phone' value="{{ data['phone'] }}">
+  <p>Địa chỉ</p>
+  <input type="text"  name='address' value="{{ data['address'] }}">
+  <p>Người liên lạ</p>
+  <input type="text"  name='contact_person' value="{{ data['contact_person'] }}">
+  <p>Số điện thoại người liên lạc</p>
+  <input type="tel"  name='contact_phone' value="{{ data['contact_phone'] }}">
+  <p>Số fax</p>
+  <input type="tel"  name='fax' value="{{ data['fax'] }}">
+  <p>Mã số thuế</p>
+  <input type="number"  name='tax_number' value="{{ data['tax_number'] }}">
+  <p>Số khoản ngân hàng</p>
+  <input type="number"  name='bank_account' value="{{ data['bank_account'] }}">
+  <p>Tên Ngân hàng</p>
+  <input type="text"  name='bank_name' value="{{ data['bank_name'] }}">
+  <p>Giá trị hợp đồng</p>
+  <input type="number"  name='contact_value' value="{{ data['contact_value'] }}">
+  <p>Ngày cần gọi</p>
+  <input id='datetimepicker' type="datetime"  name='date_to_call' value="{{ data['date_to_call'] }}" required>
+  <!-- <input type="text" placeholder="Giá trị hợp đồng bằng chữ" name='contact_value_letter' value="{{ data['contact_value_letter'] }}"> -->
+
+  <select name="status">
+    <option value="to_call">Cần gọi</option>
+    <option value="calling">Đang gọi</option>
+    <option value="waiting">Đã gọi</option>
+  </select>
+  <input type="submit" value="Lưu">
+</form>
+
+
+
+
+{% endblock %}

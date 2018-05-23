@@ -34,4 +34,6 @@ x:done
 - [x] Viết gui cho hiển thị t.tin công ty ở trang listing
 - [x] viết gui cho trang thay đổi trạng thái cả nhập note
 - [x] viết function cho trang thay đổi trạng thái
-- [v] Viết gui cho hiển thị t.tin công ty ở trang chi tiết
+- [x] Viết gui cho hiển thị t.tin công ty ở trang chi tiết
+- [v] Nhập thêm người liên lạc
+- [x] Auto update ngày
